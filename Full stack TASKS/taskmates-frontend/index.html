@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>TaskMates</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>TaskMates</h1>
+
+  <div id="auth">
+    <h2>Login</h2>
+    <input type="text" id="username" placeholder="Usuario">
+    <input type="password" id="password" placeholder="Contraseña">
+    <button id="loginBtn">Entrar</button>
+  </div>
+
+  <div id="task-section" style="display:none;">
+    <h2>Tareas</h2>
+    <input type="text" id="taskTitle" placeholder="Nueva tarea">
+    <button id="addTaskBtn">Añadir tarea</button>
+    <button id="logoutBtn">Cerrar sesión</button>
+    <ul id="listaTareas"></ul>
+  </div>
+
+  <script src="app.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

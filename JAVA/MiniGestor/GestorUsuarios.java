@@ -18,7 +18,7 @@ public class GestorUsuarios {
             System.out.println("0. Salir");
             System.out.print("Elige una opción: ");
             option = scanner.nextInt();
-            scanner.nextLine(); // LIMPIAR EL SALTO DE LÍNEA
+            scanner.nextLine(); // limpiar salto de linea
 
             switch (option) {
                 case 1:
@@ -64,5 +64,26 @@ public class GestorUsuarios {
                 System.out.println((i + 1) + ". " + u.getNombre() + " - " + u.getEmail());
             }
         }
+    }
+
+    public void deleteUser() {
+        if (usuarios.isEmpty()) {
+            System.out.println("No hay usuarios para eliminar.");
+            return;
+        }
+
+        showUsers(); //Enseña lo usuarios primero
+
+        System.out.println("Introduce el numero de usuario para eliminar: ");
+        scanner.nextLine(); //Limpia el salto de linea
+
+        if (indice < 1 || idice > usuarios.size()) {
+            System.out.println("Número invalido.");
+        } else {
+            Usuario eliminado = usuarios.remove(indice -1); //quitamos el usuario
+            System.out.println("Usuario eliminado: " + eliminado.getNombre);
+        }
+
+
     }
 }

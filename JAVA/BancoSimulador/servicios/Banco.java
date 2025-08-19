@@ -40,19 +40,14 @@ public class Banco {
         return null; // usuario o contraseña incorrecto
     }
 
-    public boolean transferir(Usuario origen, String destinoNombre, double cantidad) {
-        Usuario destino = buscarUsuario(destinoNombre);
-        if (destino == null || origen.getSaldo() < cantidad) {
-            return false;
-        }
+    public boolean transferir(Usuario origen, Usuario destino, double cantidad) {
+        if (origen == null) return false;
+        if (destino == null) return false;
+        if (origen == destino) return false; // no se puede transferir a sí mismo
+        if (cantidad <= 0) return false;
 
-        origen.retirar(cantidad);
-        destino.ingresar(cantidad);
-
-        origen.registrarMovimiento("Transferencia a " + destinoNombre + ": -" + cantidad + "€");
-        destino.registrarMovimiento("Transferencia de " + origen.getNombreUsuario() + ": +" + cantidad + "€");
-
-        return true;
+        if (!origen.retirar(cantidad)) return false; // no se pudo retirar la cantidad del origen
+        destino.ingresar(cantidad); // ya registra el movimiento
+        return true; // transferencia exitosa
     }
-
 }

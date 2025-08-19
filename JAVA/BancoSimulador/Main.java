@@ -25,24 +25,28 @@ public class Main {
             switch (opcion) {
 
                 case 0:
-                    System.out.println("Cantidad a ingresar: ");
-                    double cantidad = scanner.nextDouble();
-                    scanner.nextLine(); // Limpiar el buffer
-                    try {
-                        if cantidad <= 0 {
-                            System.err.println("La cantidad debe ser mayor que cero.");
-                        } else {
-                            System.out.println("Ingrese su nombre de usuario:");    
-                            String nombreUsuarioIngreso = scanner.nextLine();
-                            Usuario usuarioIngreso = banco.buscarUsuario(nombreUsuarioIngreso);
-                            if (usuarioIngreso != null) {
-                                usuarioIngreso.ingresar(cantidad);
-                                usuarioIngreso.registrarMovimiento("Ingreso: +" + cantidad + "€");
-                                System.out.println("Ingreso realizado con éxito. Saldo actual: " + usuarioIngreso.getSaldo() + "€");
-                            } else {
-                                System.err.println("Usuario no encontrado. Por favor, registrese primero.");
-                        }
+                    System.out.print("Cantidad a ingresar: ");
+                    double cantidadIngreso = scanner.nextDouble();
+                    scanner.nextLine(); // limpiar buffer
+
+                    if (cantidadIngreso <= 0) {
+                        System.err.println("La cantidad debe ser mayor que cero.");
+                        break;
                     }
+
+                    System.out.print("Ingrese su nombre de usuario: ");
+                    String nombreUsuarioIngreso = scanner.nextLine();
+
+                    Usuario usuarioIngreso = banco.buscarUsuario(nombreUsuarioIngreso);
+                    if (usuarioIngreso != null) {
+                        usuarioIngreso.ingresar(cantidadIngreso); // ya registra el movimiento
+                        System.out.println("Ingreso realizado con éxito. Saldo actual: " 
+                                        + usuarioIngreso.getSaldo() + "€");
+                    } else {
+                        System.err.println("Usuario no encontrado. Por favor, regístrese primero.");
+                    }
+                    break;
+
 
                 case 1:
                     System.out.println("Introduce aqui un nombre de usuario");
@@ -107,8 +111,18 @@ public class Main {
                                     System.out.println("Ingrese la cantidad a transferir:");
                                     double cantidad = scanner.nextDouble();
                                     scanner.nextLine(); // Limpiar el buffer
+
+                                    Usuario usuarioDestino = banco.buscarUsuario(destinatario);
+                                    if (usuarioDestino == null) {
+                                        System.err.println("Usuario destino no encontrado.");
+                                        break;
+                                    }
+                                    if (cantidad <= 0) {
+                                        System.err.println("La cantidad debe ser mayor que cero.");
+                                        break;
+                                    }
                                     // Hacer transferencia
-                                    boolean transferido = banco.transferir(loggedUser, destinatario, cantidad);
+                                    boolean transferido = banco.transferir(loggedUser, usuarioDestino, cantidad);
                                     if (transferido) {
                                         System.out.println("Transferencia realizada con éxito.");
                                     } else {
@@ -134,7 +148,8 @@ public class Main {
                 case 3:
                     // aqui el login
                     salir = true;
-                    System.out.println("¡Gracias por usar el banco!");
+                    System.out.println("¡Gracias por usar el banco!"); 
+                    scanner.close();
                     break;
 
                 default: 

@@ -46,11 +46,17 @@ public class Usuario {
     //ingresar dinero y retirar dinero
 
     public void ingresar(double cantidad) {
+        if (cantidad <= 0) {
+            throw new IllegalArgumentException("La cantidad a ingresar debe ser mayor que 0.");
+        }
         saldo += cantidad;
         movimientos.add("Ingreso: +" + cantidad + "€");
     }
 
     public boolean retirar(double cantidad) {
+        if (cantidad <= 0) {
+            return false; // No se puede retirar una cantidad no positiva
+        }
         if (cantidad > saldo) {
             return false; //No hay suficiente dinero
         }
